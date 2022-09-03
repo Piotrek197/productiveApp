@@ -1,22 +1,15 @@
-function getDaily() {
-  const daily = JSON.parse(localStorage.getItem("daily"));
-  const dailyInit = JSON.parse(localStorage.getItem("daily_init"));
-  const day = getFormatedDate();
-  if (daily.hasOwnProperty(day)) return daily[day];
-  else return dailyInit;
-}
+import initList from "./index";
 
-const dailyList = document.getElementById("daily-list");
-
-function initList() {
-  htmlString = "";
+function daily() {
+  const dailyList = document.getElementById("daily-list");
+  let htmlString = "";
   let dailyLocalStorage = Object.values(getDaily());
   dailyLocalStorage.forEach(
     el =>
       (htmlString += `<li class="${el.done ? "done" : ""}">${el.name}
-        <input id="${el.id}" type="checkbox" ${el.done ? "checked" : ""}/>
-
-      </li>`)
+          <input id="${el.id}" type="checkbox" ${el.done ? "checked" : ""}/>
+  
+        </li>`)
   );
   dailyList.innerHTML = htmlString;
   document.querySelectorAll("#daily-list li input[type=checkbox]").forEach(checkbox =>
@@ -39,9 +32,17 @@ function initList() {
   );
 }
 
+function getDaily() {
+  const daily = JSON.parse(localStorage.getItem("daily"));
+  const dailyInit = JSON.parse(localStorage.getItem("daily_init"));
+  const day = getFormatedDate();
+  if (daily.hasOwnProperty(day)) return daily[day];
+  else return dailyInit;
+}
+
 function getFormatedDate() {
   const date = new Date();
   return date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear();
 }
 
-initList();
+export default daily;
